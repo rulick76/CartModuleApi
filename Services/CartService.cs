@@ -14,29 +14,31 @@ namespace CartModuleApi.Services
             _context=context;
         }
 
-        public CartItem AddProductToCart(CartItemPost cartItem)
+        public CartItem AddProductToCart(CartItem cartItem)
         {
-            CartItem realItem = _context.Set<CartItem>().Where(c=>c.UserId == cartItem.UserId).FirstOrDefault();
+            CartItem realItem = _context.Set<CartItem>().Where(c=>c.UserId == cartItem.UserId  &&
+                c.ProductId==cartItem.ProductId).FirstOrDefault();
             //User post new item to the cart
             //If the cart is empty we are generating the first item for this user with nextId
             //If this product exist in the cart we are just updating the Quantity
-            int nextId =  _context.Set<CartItem>()
-                .Max(ci => ci.Id) +1;
-            
             if (realItem!=null)
             {
-                var bExistingItem = realItem.ProductId==cartItem.ProductId ? true :false;
-                if (bExistingItem)     
+                // var bExistingItem = realItem.ProductId==cartItem.ProductId ? true :false;
+                // if (bExistingItem)     
                     //Update Quantity
                     return UpdateExistingItem(cartItem, realItem);
             }
+
+            int nextId =  _context.Set<CartItem>()
+                .Max(ci => ci.Id) +1;
+            
             realItem = CreateNewCartItem(cartItem, nextId);
             _context.Set<CartItem>().Add(realItem);
             Save();
             return realItem;
         }
 
-        private static CartItem CreateNewCartItem(CartItemPost cartItem, int nextId)
+        private static CartItem CreateNewCartItem(CartItem cartItem, int nextId)
         {
             CartItem realItem = new CartItem();
             realItem.Id = nextId;
@@ -46,7 +48,7 @@ namespace CartModuleApi.Services
             return realItem;
         }
 
-        private CartItem UpdateExistingItem(CartItemPost cartItem, CartItem existingItem)
+        private CartItem UpdateExistingItem(CartItem cartItem, CartItem existingItem)
         {
             existingItem.Quantity += cartItem.Quantity;
             Update(existingItem);

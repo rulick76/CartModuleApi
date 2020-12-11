@@ -27,7 +27,7 @@ namespace CartModuleApi.Controllers
 
         // POST api/ShoppingCart
         [HttpPost]
-        public IActionResult Post(CartItemPost cartItem)
+        public IActionResult Post(CartItem cartItem)
         {       
              _iCartService.AddProductToCart(cartItem);
             return Created($"ShoppingCart", cartItem);

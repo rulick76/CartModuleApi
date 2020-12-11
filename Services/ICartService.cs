@@ -5,7 +5,7 @@ namespace CartModuleApi.Services
 {
     public interface ICartService
     {
-        CartItem AddProductToCart(CartItemPost CartItem);
+        CartItem AddProductToCart(CartItem CartItem);
         IList<CartItem> ChangeProductQuantity(int userId,int productId,int quantity);
         IList<CartItem> ClearCart(int userId);
         IList<CartItem> DeleteProduct(int userId,int productId);
