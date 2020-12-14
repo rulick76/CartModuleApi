@@ -34,17 +34,17 @@ namespace CartModuleApi
         private static void AddTestData(EnityFramWorkDbContext context)
         {
             IList<Product> products = new List<Product>();
-            products.Add(new Product { Id = 1, Name = "Water Glass", Price = 10.00M, Photo = "", Desciption = "Water Glass for drinking" });
-            products.Add(new Product { Id = 2, Name = "Jug Water Glass", Price = 12.00M, Photo = "", Desciption = "Water Glass for drinking" } );
-            products.Add(new Product { Id = 3, Name = "Green Water Glass", Price = 13.00M, Photo = "", Desciption = "Water Glass for drinking" });
-            products.Add(new Product { Id = 4, Name = "Red Water Glass", Price = 14.00M, Photo = "", Desciption = "Water Glass for drinking" });
-            products.Add(new Product { Id = 5, Name = "Yellow Water Glass", Price = 15.00M, Photo = "", Desciption = "Water Glass for drinking" });
+            products.Add(new Product { Id = 1, Name = "T-shirt", Price = 10.00M, Photo = "", Desciption = "comix T-shirt" });
+            products.Add(new Product { Id = 2, Name = "Shoes", Price = 120.00M, Photo = "", Desciption = "Reebok" } );
+            products.Add(new Product { Id = 3, Name = "Hat", Price = 13.00M, Photo = "", Desciption = "Barret-hat" });
+            products.Add(new Product { Id = 4, Name = "Tie", Price = 14.00M, Photo = "", Desciption = "Black tie" });
+            products.Add(new Product { Id = 5, Name = "Glasses", Price = 15.00M, Photo = "", Desciption = "ray-ban" });
             context.Products.AddRange(products);
             //context.SaveChanges();
 
             IList<CartItem> cartItems = new List<CartItem>();
-            cartItems.Add(new CartItem { Id = 1, ProductId = 1, Quantity = 2, UserId = 1 });
-            cartItems.Add(new CartItem { Id = 2, ProductId = 5, Quantity = 1, UserId = 1 });
+            cartItems.Add(new CartItem { Id = 1, ProductId = 1, Quantity = 2, UserId = 1 ,Active=true});
+            cartItems.Add(new CartItem { Id = 2, ProductId = 5, Quantity = 1, UserId = 1 ,Active=true});
             context.CartItems.AddRange(cartItems);
 
             context.SaveChanges();

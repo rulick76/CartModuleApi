@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\isrro\\Projects\\C#\\CartModuleApi\\CartModuleApi.csproj": {}
+    "c:\\Users\\isrro\\Projects\\C#\\CartModuleApi\\CartModuleApi.csproj": {}
   },
   "projects": {
-    "C:\\Users\\isrro\\Projects\\C#\\CartModuleApi\\CartModuleApi.csproj": {
+    "c:\\Users\\isrro\\Projects\\C#\\CartModuleApi\\CartModuleApi.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\isrro\\Projects\\C#\\CartModuleApi\\CartModuleApi.csproj",
+        "projectUniqueName": "c:\\Users\\isrro\\Projects\\C#\\CartModuleApi\\CartModuleApi.csproj",
         "projectName": "CartModuleApi",
-        "projectPath": "C:\\Users\\isrro\\Projects\\C#\\CartModuleApi\\CartModuleApi.csproj",
+        "projectPath": "c:\\Users\\isrro\\Projects\\C#\\CartModuleApi\\CartModuleApi.csproj",
         "packagesPath": "C:\\Users\\isrro\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\isrro\\Projects\\C#\\CartModuleApi\\obj\\",
+        "outputPath": "c:\\Users\\isrro\\Projects\\C#\\CartModuleApi\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\isrro\\AppData\\Roaming\\NuGet\\NuGet.Config"

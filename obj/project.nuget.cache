@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "b3PX8Yc3/MLscbpRAbHA56xzteK75uNNUIbhSCLALSM3mlBhe+m1lrvOhC5V0QLaYedW3nt5rEHVaVsfQQNzbw==",
+  "dgSpecHash": "erXTOpgnmqN8Hj3+VZjZ2sKD+BevQFVPp5QFq6J04ORn0nq1kjhKtG0ie2m7i7tFKvQdaALSI1hbWeJasVK+ww==",
   "success": true,
-  "projectFilePath": "C:\\Users\\isrro\\Projects\\C#\\CartModuleApi\\CartModuleApi.csproj",
+  "projectFilePath": "c:\\Users\\isrro\\Projects\\C#\\CartModuleApi\\CartModuleApi.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\isrro\\.nuget\\packages\\microsoft.aspnetcore.authorization\\1.0.3\\microsoft.aspnetcore.authorization.1.0.3.nupkg.sha512",
     "C:\\Users\\isrro\\.nuget\\packages\\microsoft.aspnetcore.hosting.abstractions\\1.0.4\\microsoft.aspnetcore.hosting.abstractions.1.0.4.nupkg.sha512",

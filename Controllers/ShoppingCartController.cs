@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
 using CartModuleApi.Models;
 using CartModuleApi.Services;
+using System.Threading.Tasks;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -18,49 +19,121 @@ namespace CartModuleApi.Controllers
 
         // GET: api/ShoppingCart/GetCartItems
         [HttpGet("GetItems/{userId}")]
-        public  IActionResult GetCartItems(int userId)
+        public async Task<IActionResult> GetCartItems(int userId)
         {
-            IList<CartItem> cartItems =  _iCartService.GetCartItems(userId);           
-            return Ok(cartItems);           
+            try
+            {
+                IList<CartItem> cartItems = await _iCartService.GetCartItemsAsync(userId);    
+                if (cartItems == null || cartItems.Count==0)
+                {
+                    return NotFound("User not found");
+                }       
+                return Ok(cartItems);  
+            }
+            catch (System.Exception ex)
+            {
+                
+               return BadRequest(ex.Message);
+            }
+         
         }
 
 
         // POST api/ShoppingCart
         [HttpPost]
-        public IActionResult Post(CartItem cartItem)
+        public async  Task<IActionResult> Post(CartItemPost cartItem)
         {       
-             _iCartService.AddProductToCart(cartItem);
-            return Created($"ShoppingCart", cartItem);
+            try
+            {
+                await _iCartService.AddProductToCartAsync(cartItem);
+                return Created($"ShoppingCart", cartItem);
+            }
+            catch (System.Exception ex)
+            {
+                
+                return BadRequest(ex.Message);
+            }
+
         }
 
         // PUT api/ShoppingCart/ChangeItemQuantity/5/4/3
         [HttpPut("ChangeQuantity/{userId}/{productId}/{quantity}")]
-        public IActionResult ChangeProductQuantity(int userId ,int productId, int quantity)
+        public async Task<IActionResult> ChangeProductQuantity(int userId ,int productId, int quantity)
         {
-            IList<CartItem> cartItems = _iCartService.ChangeProductQuantity(userId,productId,quantity);
-            if (cartItems == null)
-                return NotFound("Item not found in the cart, please check the productId"); 
-            return Ok(cartItems);
+            try
+            {
+                CartItem cartItem=await _iCartService.ChangeProductQuantityAsync(userId,productId,quantity);
+                if (cartItem == null)
+                {
+                    return NotFound("User with this product not found");
+                }  
+                return Ok(cartItem);
+            }
+            catch (System.Exception ex)
+            {
+                
+                return BadRequest(ex.Message);
+            }
+
         }
 
         // DELETE api/ShoppingCart/ClearCart/1
         [HttpDelete("ClearCart/{userId}")]
-        public IActionResult ClearCart (int userId)
+        public async Task<IActionResult> ClearCart (int userId)
         {
-            IList<CartItem> cartItems =  _iCartService.ClearCart(userId);
-            return Ok(cartItems);
+            try
+            {
+                bool bClear=  await _iCartService.ClearCartAsync(userId);
+                if (!bClear)
+                {
+                    return NotFound("User not found");
+                }
+                return Ok("Cart cleared for user " + userId); 
+            }
+            catch (System.Exception ex) 
+            {
+                
+                return BadRequest(ex.Message);
+            }
+
         }
 
         // DELETE api/ShoppingCart/DeleteItem/5
         [HttpDelete("DeleteItem/{userId}/{productId}")]
-        public  IActionResult DeleteProduct(int userId,int productId)
+        public  async Task<IActionResult> DeleteProduct(int userId,int productId)
         {
-            IList<CartItem> cartItems =  _iCartService.DeleteProduct(userId,productId);
-            if (cartItems == null)
-                return NotFound("Item not found in the Cart, please check the productId");
-            return Ok(cartItems);
+            try
+            {
+                CartItem cartItem=await _iCartService.DeleteProductAsync(userId,productId);
+                if (cartItem == null)
+                {
+                    return NotFound("User with this product not found");
+                }  
+                return Ok("ProductId:" + productId + " Deleted  for user " + userId);
+            }
+            catch (System.Exception ex)
+            {
+                
+                return BadRequest(ex.Message);
+            }
+
         }
         
+                // DELETE api/ShoppingCart/DeleteItem/5
+        [HttpPost("Checkout/userid")]
+        public async Task<IActionResult> Checkout(int userId)
+        {
+            try
+            {
+                bool bQueued= await _iCartService.Checkout(userId);
+                return Ok("Basket was queued"); 
+            }
+            catch (System.Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+
+        }
 
         
     }

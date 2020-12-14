@@ -1,25 +1,21 @@
 using System;
+using System.Threading.Tasks;
 using CartModuleApi.Services;
 using Microsoft.AspNetCore.Mvc;
-
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace CartModuleApi.Controllers
 {
     [Route("api/[controller]")]
     public class ProductController : Controller
     {
-
         private readonly IProductService _iProductService;
-
         public ProductController(IProductService iProductService)
         {
             _iProductService = iProductService;
         }
 
-        // GET: api/<controller>
         [HttpGet]
-        public IActionResult Get() //async Task<
+        public IActionResult Get()
         {
             try
             {
@@ -34,15 +30,15 @@ namespace CartModuleApi.Controllers
         }
 
         [HttpGet("{productId}")]
-        public IActionResult Get(int productId)
+        public async Task<IActionResult> Get(int productId)
         {
             try
             {
-                var product =  _iProductService.Get(productId);
+                var product =  await _iProductService.GetAsync(productId);
 
                 if (product == null)
                 {
-                    return NotFound();
+                    return NotFound("Product not exist");
                 }
 
                 return Ok(product);

@@ -14,18 +14,19 @@ namespace CartModuleApi.Models
         }
         [Key]
         internal int Id { get; set; }
-        public virtual Product Product { get; set; }
+        public Product Product { get; set; }
         
     }
 
-    // public class CartItemPost:CartItemBase
-    // {
-    //     public int UserId { get; set; }
-    //     public int ProductId { get; set; }
-    //     public int Quantity { get; set; }
-    // }
-
     public class CartItem:CartItemBase
+    {
+        public int UserId { get; set; }
+        public int ProductId { get; set; }
+        public int Quantity { get; set; }
+        public bool Active { get; set; }
+    }
+
+    public class CartItemPost
     {
         public int UserId { get; set; }
         public int ProductId { get; set; }

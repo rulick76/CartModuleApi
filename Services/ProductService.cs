@@ -2,6 +2,7 @@ using CartModuleApi.Models;
 using CartModuleApi.EntityFrameWork;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace CartModuleApi.Services
 {
@@ -19,10 +20,19 @@ namespace CartModuleApi.Services
         /// Get All List of Products from Product Table
         /// </summary>
         /// <returns>return list of products</returns>
-        public IList<Product> Get()
+        public  IList<Product> Get()
         {
-            var products = _context.Set<Product>();
-            return products.ToList();
+            try
+            {
+                var products =   _context.Set<Product>();
+                return products.ToList();
+            }
+            catch (System.Exception ex)
+            {
+                
+                throw ex;
+            }
+ 
         }
 
         /// <summary>
@@ -30,10 +40,17 @@ namespace CartModuleApi.Services
         /// </summary>
         /// <param name="productId"></param>
         /// <returns>return single product</returns>
-        public Product Get(int productId)
+        public async Task<Product> GetAsync(int productId)
         {
-            var product = _context.Set<Product>().Find(productId);
-            return product;
+            try
+            {
+                return await _context.Set<Product>().FindAsync(productId);
+            }
+            catch (System.Exception ex)
+            {
+                throw ex;
+            }
+            
         }
     }
 }
