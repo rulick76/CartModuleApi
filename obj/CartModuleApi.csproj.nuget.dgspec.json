@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "c:\\Users\\isrro\\Projects\\C#\\CartModuleApi\\CartModuleApi.csproj": {}
+    "C:\\Users\\isrro\\Projects\\C#\\ECommerce\\CartModuleApi\\CartModuleApi.csproj": {}
   },
   "projects": {
-    "c:\\Users\\isrro\\Projects\\C#\\CartModuleApi\\CartModuleApi.csproj": {
+    "C:\\Users\\isrro\\Projects\\C#\\ECommerce\\CartModuleApi\\CartModuleApi.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "c:\\Users\\isrro\\Projects\\C#\\CartModuleApi\\CartModuleApi.csproj",
+        "projectUniqueName": "C:\\Users\\isrro\\Projects\\C#\\ECommerce\\CartModuleApi\\CartModuleApi.csproj",
         "projectName": "CartModuleApi",
-        "projectPath": "c:\\Users\\isrro\\Projects\\C#\\CartModuleApi\\CartModuleApi.csproj",
+        "projectPath": "C:\\Users\\isrro\\Projects\\C#\\ECommerce\\CartModuleApi\\CartModuleApi.csproj",
         "packagesPath": "C:\\Users\\isrro\\.nuget\\packages\\",
-        "outputPath": "c:\\Users\\isrro\\Projects\\C#\\CartModuleApi\\obj\\",
+        "outputPath": "C:\\Users\\isrro\\Projects\\C#\\ECommerce\\CartModuleApi\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\isrro\\AppData\\Roaming\\NuGet\\NuGet.Config"
@@ -47,6 +47,14 @@
             "NSwag.AspNetCore": {
               "target": "Package",
               "version": "[13.9.4, )"
+            },
+            "RabbitMQ.client": {
+              "target": "Package",
+              "version": "[6.2.1, )"
+            },
+            "newtonsoft.json": {
+              "target": "Package",
+              "version": "[12.0.3, )"
             }
           },
           "imports": [

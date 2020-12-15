@@ -11,6 +11,6 @@ namespace CartModuleApi.Services
         Task<bool> ClearCartAsync(int userId);
         Task<CartItem> DeleteProductAsync(int userId,int productId);
         Task<IList<CartItem>> GetCartItemsAsync(int userId);
-        Task<bool> Checkout(int userid);
+        Task<IList<CartItem>> Checkout(int userid);
     }
 }

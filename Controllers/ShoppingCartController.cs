@@ -3,6 +3,10 @@ using Microsoft.AspNetCore.Mvc;
 using CartModuleApi.Models;
 using CartModuleApi.Services;
 using System.Threading.Tasks;
+using System;
+using RabbitMQ.Client;
+using System.Text;
+using Newtonsoft.Json;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -125,8 +129,9 @@ namespace CartModuleApi.Controllers
         {
             try
             {
-                bool bQueued= await _iCartService.Checkout(userId);
-                return Ok("Basket was queued"); 
+                var cartItems = await _iCartService.Checkout(userId);
+                PublishToQueue(cartItems);
+                return Ok("Basket was queued");
             }
             catch (System.Exception ex)
             {
@@ -135,6 +140,45 @@ namespace CartModuleApi.Controllers
 
         }
 
-        
+        private static void PublishToQueue(IList<CartItem> cartItems)
+        {
+            var factory = new ConnectionFactory();
+            factory.Uri = new Uri("amqp://guest:guest@localhost:5672");
+            var connection = factory.CreateConnection();
+            var channel = connection.CreateModel();
+
+            channel.ExchangeDeclare("ShoppingCartExchange", ExchangeType.Fanout, true);
+            //In a Fanount Exchane each queue will receive messages when subscribing to the exchange
+            //The Exchange should be declared as Fanount and in the BasicPublish empty routingKey 
+            //his being passed 
+            //Each subscriber/consumer signed to the Exchange with the QueueBind method and passing empty string to the routingKey parameter
+
+            //In a Direct Exchane each queue will receive messages when subscribing to the exchange
+            //The Exchange should be declared as Direct and in the BasicPublish real routingKey 
+            //is being passed 
+            //Each subscriber/consumer signed to the Exchange with the QueueBind method and passing a real routingKey parameter
+
+            //In a Topic Exchane each queue will receive messages when subscribing to the exchange
+            //The Exchange should be declared as Topic and in the BasicPublish real routingKey 
+            //is being passed 
+            //Each subscriber/consumer signed to the Exchange with the QueueBind method and passing a real routingKey parameter
+            //Or BaseRoute.* to recieve all messages for the Topic which is the base route.
+
+            //In a Header Exchane each queue will receive messages when subscribing to the exchange
+            //The Exchange should be declared as Headers and in the BasicPublish an empty routingKey 
+            //is being passed , instead a dictionary is being passed to the basic properties parameter.
+            //The dictionary contains a subject and action for example Cart.Sent, Cart.Delete etc..
+            //The subject is Cart and the action is sent,delete...
+            //Each subscriber/consumer signed to the Exchange with the QueueBind method and passing an empty routingKey 
+            //Instead, for the forth parameter to the QueueBind, each consumer have to declare a dictionart contains
+            //a subject an action and x-match key that can be all or any
+            //If it is being subscribed with all it behave like in Direct Exchange the subject and the action should both match.
+            //If it is being subscribed with any it behave like in a Topic exchange, the subject is matched and this is enough.
+            var bytes = Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(cartItems));
+            channel.BasicPublish("ShoppingCartExchange", "", null, bytes);
+            channel.Close();
+            connection.Close();
+        }
+
     }
 }

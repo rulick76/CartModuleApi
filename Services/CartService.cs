@@ -189,10 +189,10 @@ namespace CartModuleApi.Services
             dbSet.Remove(entity);
         }
 
-        public async Task<bool> Checkout(int userId)
+        public async Task<IList<CartItem>> Checkout(int userId)
         {
             try
-            {
+            {            
                 //Publish the basket to a broker queue for the payment service subscriber 
                 var cartItems = await _context.Set<CartItem>().Where(ci => ci.UserId == userId && ci.Active).ToListAsync();
                 cartItems.ForEach(ci =>
@@ -200,7 +200,7 @@ namespace CartModuleApi.Services
                             ci.Active=false;
                         });
                 await SaveAsync();
-                return true;
+                return cartItems;
             }
             catch (System.Exception ex)
             {
